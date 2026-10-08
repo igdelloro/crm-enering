@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  /* Sfondo neutro tenue, riposante per gli occhi */
+  background-color: #f4f5f7;
+  color: #283347;
+}
+
+/* Modalità scura: sfondo profondo ma non nero puro, testo morbido */
+html.dark,
+html.dark body {
+  background-color: #0f1623;
+  color: #e2e8f0;
+}
+
+/* Placeholder leggibili in entrambe le modalità */
+::placeholder {
+  color: #94a3b8;
+}
+html.dark ::placeholder {
+  color: #64748b;
+}
+
+/* I campi select/date usano i colori del tema del browser: li adeguiamo */
+html.dark input,
+html.dark select,
+html.dark textarea {
+  color-scheme: dark;
+}
