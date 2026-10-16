@@ -6,6 +6,9 @@
 --  Sostituisce la necessità di tenere traccia delle singole migrazioni.
 -- =====================================================================
 
+-- Le funzioni possono citare tabelle create più sotto (come fa pg_dump).
+set check_function_bodies = off;
+
 -- ------------------------- TIPI (enum) -------------------------------
 do $$ begin create type deal_stage as enum
   ('lead','qualificato','proposta','negoziazione','vinta','persa');
@@ -587,6 +590,9 @@ as $$
   );
 $$;
 grant execute on function e_venditore() to authenticated;
+
+-- ------------------------- BACHECA (annunci) ------------------------
+create table if not exists annunci (
   id uuid primary key default gen_random_uuid(),
   titolo text not null,
   corpo text,
