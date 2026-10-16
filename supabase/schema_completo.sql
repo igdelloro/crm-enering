@@ -429,7 +429,7 @@ returns trigger language plpgsql security definer set search_path = public as $$
 begin
   if new.stato in ('aggiudicata', 'accettato') then
     insert into cantieri (preventivo_id, company_id, titolo, importo)
-    select new.id, new.company_id, coalesce(nullif(new.oggetto,''), new.numero, 'Cantiere'), new.importo
+    select new.id, new.company_id, coalesce(nullif(new.oggetto,''), new.numero, 'Commessa'), new.importo
     where not exists (select 1 from cantieri where preventivo_id = new.id);
   end if;
   return new;

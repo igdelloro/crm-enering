@@ -9,19 +9,20 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Palette allineata al logo SOLE: blu cobalto #005399 come colore
-        // principale (brand-600), con giallo-sole come accento.
+        // Palette allineata al logo ENER.ING: arancio #F26700 (brand-500),
+        // tono leggermente più scuro come colore principale (brand-600)
+        // per avere buon contrasto con il testo bianco sui pulsanti.
         brand: {
-          50: "#e8f1f9",
-          100: "#cfe3f3",
-          200: "#a0c7e7",
-          300: "#6ba7d8",
-          400: "#2f82c4",
-          500: "#0d67ad",
-          600: "#005399",
-          700: "#004a88",
-          800: "#003d70",
-          900: "#00305a",
+          50: "#fff4eb",
+          100: "#ffe4cc",
+          200: "#ffc799",
+          300: "#ffa25c",
+          400: "#ff8526",
+          500: "#f26700",
+          600: "#d65b00",
+          700: "#b24c00",
+          800: "#8c3c00",
+          900: "#6b2e00",
         },
         sole: {
           400: "#ffd43b",

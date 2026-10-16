@@ -31,7 +31,7 @@ const SEZIONI = [
   "Agenda",
   "Clienti",
   "Preventivi",
-  "Cantieri",
+  "Commesse",
   "Curriculum",
   "Performance",
   "Provvigioni",

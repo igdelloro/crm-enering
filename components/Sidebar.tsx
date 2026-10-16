@@ -42,7 +42,7 @@ const gruppi: Gruppo[] = [
       { href: "/agenda", label: "Agenda", Icon: IconAgenda, soloVenditore: true },
       { href: "/clienti", label: "Clienti", Icon: IconClienti },
       { href: "/preventivi", label: "Preventivi", Icon: IconPreventivi },
-      { href: "/cantieri", label: "Cantieri", Icon: IconCantieri },
+      { href: "/cantieri", label: "Commesse", Icon: IconCantieri },
       { href: "/curriculum", label: "Curriculum Vitae", Icon: IconCV },
     ],
   },

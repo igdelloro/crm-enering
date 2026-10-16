@@ -81,7 +81,7 @@ export default function CantieriClient({ agenti }: { agenti: Agente[] }) {
     // Spostamento su "Chiuso": conferma e archivia nel Curriculum Vitae
     if (fase === "chiuso") {
       const ok = confirm(
-        "Segnare questo cantiere come CHIUSO e spostarlo nel Curriculum Vitae?"
+        "Segnare questa commessa come CHIUSA e spostarlo nel Curriculum Vitae?"
       );
       if (!ok) return;
       setRows((prev) => prev.filter((r) => r.id !== id));
@@ -103,7 +103,7 @@ export default function CantieriClient({ agenti }: { agenti: Agente[] }) {
     fetchAll();
   }
   async function onDeleteCantiere(id: string) {
-    if (!confirm("Eliminare questo cantiere?")) return;
+    if (!confirm("Eliminare questa commessa?")) return;
     const res = await deleteCantiere(id);
     if (res?.error) alert(res.error);
     setSel(null);
@@ -156,9 +156,9 @@ export default function CantieriClient({ agenti }: { agenti: Agente[] }) {
   return (
     <>
       <PageHeader
-        title="Cantieri"
+        title="Commesse"
         subtitle={
-          loading ? "Caricamento…" : `${rows.length} cantieri`
+          loading ? "Caricamento…" : `${rows.length} commesse`
         }
       />
 
@@ -190,7 +190,7 @@ export default function CantieriClient({ agenti }: { agenti: Agente[] }) {
                       className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 p-3 shadow-sm cursor-pointer hover:border-brand-300 dark:hover:border-brand-500"
                     >
                       <div className="text-sm font-semibold text-slate-800 dark:text-slate-100">
-                        {c.titolo ?? c.preventivi?.numero ?? "Cantiere"}
+                        {c.titolo ?? c.preventivi?.numero ?? "Commessa"}
                       </div>
                       <div className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                         {c.companies?.name ?? "—"}
@@ -226,16 +226,16 @@ export default function CantieriClient({ agenti }: { agenti: Agente[] }) {
 
       {rows.length === 0 && !loading && (
         <p className="text-sm text-slate-400 dark:text-slate-500 mt-4">
-          Nessun cantiere ancora. Si creano in automatico quando un preventivo
+          Nessuna commessa ancora. Si creano in automatico quando un preventivo
           passa ad «Accettato» o una gara ad «Aggiudicata».
         </p>
       )}
 
-      {/* Dettaglio cantiere */}
+      {/* Dettaglio commessa */}
       <Modal
         open={!!sel}
         onClose={() => setSel(null)}
-        title={sel?.titolo ?? "Cantiere"}
+        title={sel?.titolo ?? "Commessa"}
       >
         {sel && (
           <div className="space-y-5">
@@ -293,7 +293,7 @@ export default function CantieriClient({ agenti }: { agenti: Agente[] }) {
                   onClick={() => onDeleteCantiere(sel.id)}
                   className="text-sm text-red-500 hover:underline"
                 >
-                  Elimina cantiere
+                  Elimina commessa
                 </button>
                 <Button type="submit" disabled={saving}>
                   {saving ? "Salvataggio…" : "Salva"}

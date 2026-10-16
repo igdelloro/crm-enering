@@ -116,7 +116,7 @@ export default async function DashboardPage() {
         <Tile label="Clienti PA" value={clientiPA} href="/clienti" Icon={IconPA} />
         <Tile label="Clienti privati" value={clientiPrivati} href="/clienti" Icon={IconPrivati} />
         <Tile label="Preventivi / Gare" value={preventiviCount ?? 0} href="/preventivi" Icon={IconPreventivi} />
-        <Tile label="Cantieri attivi" value={cantieriCount ?? 0} href="/cantieri" Icon={IconCantieri} />
+        <Tile label="Commesse attive" value={cantieriCount ?? 0} href="/cantieri" Icon={IconCantieri} />
         <Tile label="Appuntamenti (mese)" value={appuntamentiCount ?? 0} href="/agenda" Icon={IconAgenda} />
         <Tile label="Suggerimenti aperti" value={suggerimentiCount ?? 0} href="/suggerimenti" Icon={IconSuggerimenti} />
         <Tile label="Annunci" value={annunciCount ?? 0} href="/bacheca" Icon={IconBacheca} />

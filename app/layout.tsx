@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "CRM",
+  title: "CRM ENER.ING",
   description: "CRM interno del team",
 };
 

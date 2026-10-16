@@ -315,7 +315,13 @@ export function statoMeta(
 // Esempi: SOLE → LED, FOTOVOLTAICO, LED+FOTOVOLTAICO, ALTRO
 //         Riva → SERRAMENTI, PORTE, FALEGNAMERIA SU MISURA, POSA, ALTRO
 //         Ener.ing → PROGETTAZIONE, DIREZIONE LAVORI, PRATICHE/INCENTIVI, CONSULENZA, ALTRO
-export const CATEGORIE_PREVENTIVO = ["CATEGORIA 1", "CATEGORIA 2", "ALTRO"] as const;
+export const CATEGORIE_PREVENTIVO = [
+  "PROGETTAZIONE",
+  "DIREZIONE LAVORI",
+  "PRATICHE/INCENTIVI",
+  "CONSULENZA",
+  "ALTRO",
+] as const;
 
 export interface Preventivo {
   id: string;

@@ -49,7 +49,7 @@ export default function CurriculumClient({ lavori }: { lavori: Lavoro[] }) {
   const totale = filtered.reduce((s, l) => s + Number(l.importo ?? 0), 0);
 
   async function onRipristina(id: string) {
-    if (!confirm("Riportare questo lavoro nella bacheca Cantieri?")) return;
+    if (!confirm("Riportare questo lavoro nella bacheca Commesse?")) return;
     await ripristinaDaCV(id);
     router.refresh();
   }
@@ -80,7 +80,7 @@ export default function CurriculumClient({ lavori }: { lavori: Lavoro[] }) {
 
       <Card>
         {filtered.length === 0 ? (
-          <EmptyState message="Nessun lavoro nel curriculum. I lavori arrivano qui quando un cantiere viene chiuso." />
+          <EmptyState message="Nessun lavoro nel curriculum. I lavori arrivano qui quando una commessa viene chiusa." />
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm min-w-[640px]">
@@ -133,7 +133,7 @@ export default function CurriculumClient({ lavori }: { lavori: Lavoro[] }) {
                         onClick={() => onRipristina(l.id)}
                         className="text-brand-600 dark:text-brand-300 hover:underline text-xs"
                       >
-                        Riporta in cantieri
+                        Riporta in commesse
                       </button>
                     </td>
                   </tr>

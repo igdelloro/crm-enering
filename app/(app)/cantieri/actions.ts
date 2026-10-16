@@ -45,7 +45,7 @@ export async function ripristinaDaCV(id: string) {
 export async function saveCantiere(formData: FormData) {
   const supabase = createClient();
   const id = clean(formData.get("id"));
-  if (!id) return { error: "Cantiere mancante." };
+  if (!id) return { error: "Commessa mancante." };
   const fase = clean(formData.get("fase")) ?? "da_pianificare";
   const payload: Record<string, unknown> = {
     titolo: clean(formData.get("titolo")),
