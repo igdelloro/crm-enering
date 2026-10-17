@@ -146,6 +146,7 @@ export interface Company {
   citta: string | null;
   provincia: string | null;
   regione: string | null;
+  abitanti: number | null; // utile per i Comuni (PA)
   // referente principale
   referente_nome: string | null;
   referente_ruolo: string | null;

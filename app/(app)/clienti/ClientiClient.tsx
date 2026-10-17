@@ -61,6 +61,9 @@ export default function ClientiClient({ agenti }: { agenti: Agente[] }) {
   const [fVend, setFVend] = useState("");
   const [fTlmk, setFTlmk] = useState("");
   const [fSemaforo, setFSemaforo] = useState("");
+  const [fAbMin, setFAbMin] = useState("");
+  const [fAbMax, setFAbMax] = useState("");
+  const [ordine, setOrdine] = useState<"nome" | "abitanti_desc" | "abitanti_asc">("nome");
 
   // form "nuovo cliente"
   const [open, setOpen] = useState(false);
@@ -79,8 +82,23 @@ export default function ClientiClient({ agenti }: { agenti: Agente[] }) {
 
       let query = supabase
         .from("companies")
-        .select("*", { count: "exact" })
-        .order("name", { ascending: true });
+        .select("*", { count: "exact" });
+
+      if (ordine === "nome") {
+        query = query.order("name", { ascending: true });
+      } else {
+        query = query
+          .order("abitanti", {
+            ascending: ordine === "abitanti_asc",
+            nullsFirst: false,
+          })
+          .order("name", { ascending: true });
+      }
+
+      const abMin = parseInt(fAbMin.replace(/[^0-9]/g, ""), 10);
+      const abMax = parseInt(fAbMax.replace(/[^0-9]/g, ""), 10);
+      if (Number.isFinite(abMin)) query = query.gte("abitanti", abMin);
+      if (Number.isFinite(abMax)) query = query.lte("abitanti", abMax);
 
       if (fTipo) query = query.eq("tipo", fTipo);
       if (fRegione) query = query.eq("regione", fRegione);
@@ -129,7 +147,7 @@ export default function ClientiClient({ agenti }: { agenti: Agente[] }) {
       setTotal(count ?? 0);
       setRows((prev) => (reset ? batch : [...prev, ...batch]));
     },
-    [supabase, fTipo, fRegione, fProvincia, fVend, fTlmk, fSemaforo, q]
+    [supabase, fTipo, fRegione, fProvincia, fVend, fTlmk, fSemaforo, fAbMin, fAbMax, ordine, q]
   );
 
   const hasFilters = !!(
@@ -139,7 +157,9 @@ export default function ClientiClient({ agenti }: { agenti: Agente[] }) {
     fProvincia.trim() ||
     fVend ||
     fTlmk ||
-    fSemaforo
+    fSemaforo ||
+    fAbMin.trim() ||
+    fAbMax.trim()
   );
 
   // All'apertura la lista è vuota: i clienti si caricano solo quando c'è una
@@ -225,6 +245,33 @@ export default function ClientiClient({ agenti }: { agenti: Agente[] }) {
           onChange={(e) => setFProvincia(e.target.value)}
           className="max-w-[140px]"
         />
+        <div className="flex items-center gap-2">
+          <Input
+            type="number"
+            min={0}
+            placeholder="Abitanti da"
+            value={fAbMin}
+            onChange={(e) => setFAbMin(e.target.value)}
+            className="max-w-[130px]"
+          />
+          <Input
+            type="number"
+            min={0}
+            placeholder="a"
+            value={fAbMax}
+            onChange={(e) => setFAbMax(e.target.value)}
+            className="max-w-[110px]"
+          />
+        </div>
+        <Select
+          value={ordine}
+          onChange={(e) => setOrdine(e.target.value as typeof ordine)}
+          className="max-w-[210px]"
+        >
+          <option value="nome">Ordina per nome</option>
+          <option value="abitanti_desc">Abitanti: dal più grande</option>
+          <option value="abitanti_asc">Abitanti: dal più piccolo</option>
+        </Select>
         <Select
           value={fSemaforo}
           onChange={(e) => setFSemaforo(e.target.value)}
@@ -276,6 +323,8 @@ export default function ClientiClient({ agenti }: { agenti: Agente[] }) {
               setFVend("");
               setFTlmk("");
               setFSemaforo("");
+              setFAbMin("");
+              setFAbMax("");
             }}
             className="text-sm text-slate-500 dark:text-slate-400 hover:underline"
           >
@@ -290,7 +339,7 @@ export default function ClientiClient({ agenti }: { agenti: Agente[] }) {
             Errore nel caricamento: {loadError}
           </div>
         ) : !hasFilters ? (
-          <EmptyState message="Cerca un cliente per nome, città, P.IVA o referente — oppure usa i filtri (tipo, regione, provincia, agente) per mostrare l'elenco." />
+          <EmptyState message="Cerca un cliente per nome, città, P.IVA o referente — oppure usa i filtri (tipo, regione, provincia, abitanti, agente) per mostrare l'elenco." />
         ) : rows.length === 0 && !loading ? (
           <EmptyState message="Nessun cliente trovato con questi criteri." />
         ) : (
@@ -300,6 +349,7 @@ export default function ClientiClient({ agenti }: { agenti: Agente[] }) {
                 <th className="px-4 py-3 font-medium w-8"></th>
                 <th className="px-4 py-3 font-medium">Cliente</th>
                 <th className="px-4 py-3 font-medium">Tipo</th>
+                <th className="px-4 py-3 font-medium text-right">Abitanti</th>
                 <th className="px-4 py-3 font-medium">Telefono</th>
                 <th className="px-4 py-3 font-medium">Referente</th>
                 <th className="px-4 py-3 font-medium">Telemarketing</th>
@@ -345,6 +395,9 @@ export default function ClientiClient({ agenti }: { agenti: Agente[] }) {
                         ? "Società"
                         : "Privato"}
                     </Badge>
+                  </td>
+                  <td className="px-4 py-3 text-right tabular-nums text-slate-600 dark:text-slate-300">
+                    {c.abitanti != null ? c.abitanti.toLocaleString("it-IT") : "—"}
                   </td>
                   <td className="px-4 py-3 text-slate-600 dark:text-slate-300">{c.phone ?? "—"}</td>
                   <td className="px-4 py-3 text-slate-600 dark:text-slate-300">

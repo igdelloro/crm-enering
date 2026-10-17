@@ -42,6 +42,12 @@ export async function saveClient(formData: FormData) {
     citta: clean(formData.get("citta")),
     provincia: clean(formData.get("provincia")),
     regione: clean(formData.get("regione")),
+    abitanti: (() => {
+      const raw = clean(formData.get("abitanti"));
+      if (tipo !== "pa" || !raw) return null;
+      const n = parseInt(raw.replace(/[^0-9]/g, ""), 10);
+      return Number.isFinite(n) ? n : null;
+    })(),
     referente_nome: tipo !== "privato" ? clean(formData.get("referente_nome")) : null,
     referente_ruolo: tipo !== "privato" ? clean(formData.get("referente_ruolo")) : null,
     referente_contatto:

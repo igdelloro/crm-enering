@@ -139,16 +139,28 @@ export default function ClientForm({
           <Input name="provincia" maxLength={2} defaultValue={editing?.provincia ?? ""} />
         </Field>
       </div>
-      <Field label="Regione">
-        <Select name="regione" defaultValue={editing?.regione ?? ""}>
-          <option value="">—</option>
-          {REGIONI.map((r) => (
-            <option key={r} value={r}>
-              {r}
-            </option>
-          ))}
-        </Select>
-      </Field>
+      <div className={formTipo === "pa" ? "grid grid-cols-2 gap-3" : ""}>
+        <Field label="Regione">
+          <Select name="regione" defaultValue={editing?.regione ?? ""}>
+            <option value="">—</option>
+            {REGIONI.map((r) => (
+              <option key={r} value={r}>
+                {r}
+              </option>
+            ))}
+          </Select>
+        </Field>
+        {formTipo === "pa" && (
+          <Field label="Abitanti">
+            <Input
+              name="abitanti"
+              type="number"
+              min={0}
+              defaultValue={editing?.abitanti ?? ""}
+            />
+          </Field>
+        )}
+      </div>
 
       {formTipo !== "privato" && (
         <div className="rounded-lg bg-slate-50 dark:bg-slate-800 p-3 space-y-3">

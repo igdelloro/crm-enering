@@ -239,6 +239,14 @@ export default function ClientDetailClient({
             />
             <Info label="Regione" value={client.regione} />
             <Info
+              label="Abitanti"
+              value={
+                client.abitanti != null
+                  ? client.abitanti.toLocaleString("it-IT")
+                  : null
+              }
+            />
+            <Info
               label="Referente"
               value={
                 client.referente_nome
