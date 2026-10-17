@@ -223,7 +223,9 @@ export default function ClientDetailClient({
 
           <dl className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-4">
             <Info label="Telefono" value={client.phone} />
+            <Info label="Email" value={client.email} />
             <Info label="PEC" value={client.pec} />
+            <Info label="Sito web" value={client.website} />
             <Info
               label={client.tipo === "pa" ? "Cod. Univoco" : "P.IVA"}
               value={client.tipo === "pa" ? client.codice_univoco : client.piva}

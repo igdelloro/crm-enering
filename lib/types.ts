@@ -141,6 +141,7 @@ export interface Company {
   website: string | null;
   industry: string | null; // settore
   phone: string | null;
+  email: string | null; // email ordinaria (non PEC)
   address: string | null;
   cap: string | null;
   citta: string | null;

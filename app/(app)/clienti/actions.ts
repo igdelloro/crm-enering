@@ -37,6 +37,8 @@ export async function saveClient(formData: FormData) {
     pec: clean(formData.get("pec")),
     industry: tipo === "societa" ? clean(formData.get("industry")) : null,
     phone: clean(formData.get("phone")),
+    email: clean(formData.get("email")),
+    website: clean(formData.get("website")),
     address: clean(formData.get("address")),
     cap: clean(formData.get("cap")),
     citta: clean(formData.get("citta")),

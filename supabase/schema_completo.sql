@@ -116,6 +116,8 @@ alter table companies add column if not exists last_contact_at timestamptz;
 alter table companies add column if not exists flag_manuale text;
 -- Numero di abitanti (utile per i Comuni / clienti PA)
 alter table companies add column if not exists abitanti integer;
+-- Email ordinaria (non PEC) del cliente
+alter table companies add column if not exists email text;
 create index if not exists companies_abitanti_idx on companies (abitanti);
 
 drop trigger if exists trg_companies_updated on companies;

@@ -118,8 +118,14 @@ export default function ClientForm({
         <Field label="Telefono">
           <Input name="phone" defaultValue={editing?.phone ?? ""} />
         </Field>
+        <Field label="Email">
+          <Input name="email" type="email" defaultValue={editing?.email ?? ""} />
+        </Field>
         <Field label="PEC">
           <Input name="pec" defaultValue={editing?.pec ?? ""} />
+        </Field>
+        <Field label="Sito web">
+          <Input name="website" defaultValue={editing?.website ?? ""} />
         </Field>
       </div>
 
