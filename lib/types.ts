@@ -152,6 +152,7 @@ export interface Company {
   referente_nome: string | null;
   referente_ruolo: string | null;
   referente_contatto: string | null;
+  referente_email: string | null;
   // assegnazione
   tlmk_agente_id: string | null;
   venditore_agente_id: string | null;

@@ -187,12 +187,21 @@ export default function ClientForm({
               />
             </Field>
           </div>
-          <Field label="Contatto referente (tel./email)">
-            <Input
-              name="referente_contatto"
-              defaultValue={editing?.referente_contatto ?? ""}
-            />
-          </Field>
+          <div className="grid grid-cols-2 gap-4">
+            <Field label="Telefono / contatto referente">
+              <Input
+                name="referente_contatto"
+                defaultValue={editing?.referente_contatto ?? ""}
+              />
+            </Field>
+            <Field label="Email referente">
+              <Input
+                name="referente_email"
+                type="email"
+                defaultValue={editing?.referente_email ?? ""}
+              />
+            </Field>
+          </div>
         </div>
       )}
 

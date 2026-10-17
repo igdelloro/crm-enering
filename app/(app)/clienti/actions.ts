@@ -54,6 +54,8 @@ export async function saveClient(formData: FormData) {
     referente_ruolo: tipo !== "privato" ? clean(formData.get("referente_ruolo")) : null,
     referente_contatto:
       tipo !== "privato" ? clean(formData.get("referente_contatto")) : null,
+    referente_email:
+      tipo !== "privato" ? clean(formData.get("referente_email")) : null,
     tlmk_agente_id: clean(formData.get("tlmk_agente_id")),
     venditore_agente_id: clean(formData.get("venditore_agente_id")),
     flag_manuale: formData.get("flag_azzurro") === "on" ? "azzurro" : null,

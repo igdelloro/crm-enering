@@ -259,6 +259,7 @@ export default function ClientDetailClient({
               }
             />
             <Info label="Contatto referente" value={client.referente_contatto} />
+            <Info label="Email referente" value={client.referente_email} />
             <Info
               label="Telemarketing"
               value={

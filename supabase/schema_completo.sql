@@ -110,6 +110,7 @@ alter table companies add column if not exists regione text;
 alter table companies add column if not exists referente_nome text;
 alter table companies add column if not exists referente_ruolo text;
 alter table companies add column if not exists referente_contatto text;
+alter table companies add column if not exists referente_email text;
 alter table companies add column if not exists tlmk_agente_id uuid references agenti(id) on delete set null;
 alter table companies add column if not exists venditore_agente_id uuid references agenti(id) on delete set null;
 alter table companies add column if not exists last_contact_at timestamptz;
