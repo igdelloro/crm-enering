@@ -28,6 +28,15 @@ import ClientForm from "./ClientForm";
 
 const PAGE_SIZE = 15;
 
+// Fasce di abitanti per il filtro (min incluso, max escluso)
+const FASCE_ABITANTI: { value: string; label: string; min?: number; max?: number }[] = [
+  { value: "lt1000", label: "Meno di 1.000 ab.", max: 1000 },
+  { value: "1000-5000", label: "1.000 – 5.000 ab.", min: 1000, max: 5000 },
+  { value: "5000-15000", label: "5.000 – 15.000 ab.", min: 5000, max: 15000 },
+  { value: "15000-25000", label: "15.000 – 25.000 ab.", min: 15000, max: 25000 },
+  { value: "gte25000", label: "Oltre 25.000 ab.", min: 25000 },
+];
+
 const tipoColor: Record<TipoCliente, "violet" | "blue" | "slate"> = {
   pa: "violet",
   societa: "blue",
@@ -61,8 +70,7 @@ export default function ClientiClient({ agenti }: { agenti: Agente[] }) {
   const [fVend, setFVend] = useState("");
   const [fTlmk, setFTlmk] = useState("");
   const [fSemaforo, setFSemaforo] = useState("");
-  const [fAbMin, setFAbMin] = useState("");
-  const [fAbMax, setFAbMax] = useState("");
+  const [fAbitanti, setFAbitanti] = useState("");
   const [ordine, setOrdine] = useState<"nome" | "abitanti_desc" | "abitanti_asc">("nome");
 
   // form "nuovo cliente"
@@ -95,10 +103,9 @@ export default function ClientiClient({ agenti }: { agenti: Agente[] }) {
           .order("name", { ascending: true });
       }
 
-      const abMin = parseInt(fAbMin.replace(/[^0-9]/g, ""), 10);
-      const abMax = parseInt(fAbMax.replace(/[^0-9]/g, ""), 10);
-      if (Number.isFinite(abMin)) query = query.gte("abitanti", abMin);
-      if (Number.isFinite(abMax)) query = query.lte("abitanti", abMax);
+      const fascia = FASCE_ABITANTI.find((f) => f.value === fAbitanti);
+      if (fascia?.min != null) query = query.gte("abitanti", fascia.min);
+      if (fascia?.max != null) query = query.lt("abitanti", fascia.max);
 
       if (fTipo) query = query.eq("tipo", fTipo);
       if (fRegione) query = query.eq("regione", fRegione);
@@ -147,7 +154,7 @@ export default function ClientiClient({ agenti }: { agenti: Agente[] }) {
       setTotal(count ?? 0);
       setRows((prev) => (reset ? batch : [...prev, ...batch]));
     },
-    [supabase, fTipo, fRegione, fProvincia, fVend, fTlmk, fSemaforo, fAbMin, fAbMax, ordine, q]
+    [supabase, fTipo, fRegione, fProvincia, fVend, fTlmk, fSemaforo, fAbitanti, ordine, q]
   );
 
   const hasFilters = !!(
@@ -158,8 +165,7 @@ export default function ClientiClient({ agenti }: { agenti: Agente[] }) {
     fVend ||
     fTlmk ||
     fSemaforo ||
-    fAbMin.trim() ||
-    fAbMax.trim()
+    fAbitanti
   );
 
   // All'apertura la lista è vuota: i clienti si caricano solo quando c'è una
@@ -245,24 +251,18 @@ export default function ClientiClient({ agenti }: { agenti: Agente[] }) {
           onChange={(e) => setFProvincia(e.target.value)}
           className="max-w-[140px]"
         />
-        <div className="flex items-center gap-2">
-          <Input
-            type="number"
-            min={0}
-            placeholder="Abitanti da"
-            value={fAbMin}
-            onChange={(e) => setFAbMin(e.target.value)}
-            className="max-w-[130px]"
-          />
-          <Input
-            type="number"
-            min={0}
-            placeholder="a"
-            value={fAbMax}
-            onChange={(e) => setFAbMax(e.target.value)}
-            className="max-w-[110px]"
-          />
-        </div>
+        <Select
+          value={fAbitanti}
+          onChange={(e) => setFAbitanti(e.target.value)}
+          className="max-w-[200px]"
+        >
+          <option value="">Tutti gli abitanti</option>
+          {FASCE_ABITANTI.map((f) => (
+            <option key={f.value} value={f.value}>
+              {f.label}
+            </option>
+          ))}
+        </Select>
         <Select
           value={ordine}
           onChange={(e) => setOrdine(e.target.value as typeof ordine)}
@@ -323,8 +323,7 @@ export default function ClientiClient({ agenti }: { agenti: Agente[] }) {
               setFVend("");
               setFTlmk("");
               setFSemaforo("");
-              setFAbMin("");
-              setFAbMax("");
+              setFAbitanti("");
             }}
             className="text-sm text-slate-500 dark:text-slate-400 hover:underline"
           >
