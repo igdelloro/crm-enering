@@ -211,6 +211,13 @@ export default function Sidebar({
           <p className="text-xs text-slate-400 dark:text-slate-500 truncate">{userEmail}</p>
         </div>
         <ThemeToggle />
+        <Link
+          href="/cambia-password"
+          onClick={onNavigate}
+          className="block w-full text-left rounded-lg px-3 py-2 text-sm text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800"
+        >
+          Cambia password
+        </Link>
         <form action="/auth/signout" method="post">
           <button
             type="submit"

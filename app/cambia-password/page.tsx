@@ -93,6 +93,14 @@ export default function CambiaPasswordPage() {
             {saving ? "Salvataggio…" : "Salva e continua"}
           </button>
         </form>
+        <p className="text-center mt-4">
+          <a
+            href="/dashboard"
+            className="text-sm text-slate-500 dark:text-slate-400 hover:underline"
+          >
+            Annulla e torna al CRM
+          </a>
+        </p>
       </div>
     </div>
   );
